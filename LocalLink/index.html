@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LocalLink Market - Buy, Sell, & Swap Locally</title>
+
+    <!-- Bootstrap CSS for responsive design and components -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+
+    <!-- Your custom CSS for styling and overrides -->
+    <link rel="stylesheet" href="css/style.css">
+
+    <!-- Font Awesome CSS for icons (e.g., search, plus-circle, category icons) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- Google Fonts: Inter for general text, Fredoka One for the website brand name -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fredoka+One&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <!-- Header Section: Contains website name, search bar, and user authentication buttons -->
+    <header class="navbar navbar-expand-lg py-3" style="background-color: #1e3d2f;">
+        <div class="container-fluid">
+            <!-- Website Name/Brand: Uses Fredoka One font and green theme -->
+            <a class="navbar-brand fw-bold fs-3 text-white" href="#">LocalLink Market</a>
+
+            <!-- Navbar Toggler: Hamburger icon for mobile view -->
+            <button class="navbar-toggler bg-white" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <!-- Collapsible Navigation: Contains search form and auth buttons -->
+            <div class="collapse navbar-collapse justify-content-between" id="navbarNav">
+                <!-- Search Form: For finding items -->
+                <form class="d-flex flex-grow-1 mx-lg-5 my-2 my-lg-0" id="searchForm">
+                    <input class="form-control me-2 rounded-pill" type="search" placeholder="Search for furniture, electronics, books..." aria-label="Search items">
+                    <button class="btn btn-outline-light rounded-pill" type="submit">
+                        <i class="fas fa-search"></i> <!-- Search icon -->
+                    </button>
+                </form>
+
+                <!-- User Information and Authentication Buttons -->
+                <ul class="navbar-nav mb-2 mb-lg-0 align-items-center">
+                    <!-- Display for logged-in user (hidden by default) -->
+                    <li class="nav-item me-3 d-none" id="loggedInUserDisplay">
+                        <small class="text-white">Welcome, <strong id="usernameDisplay"></strong> (<span id="userIdDisplay"></span>)</small>
+                    </li>
+                    <!-- Login Button (shown if not logged in) -->
+                    <li class="nav-item me-2" id="loginButtonContainer">
+                        <button class="btn btn-success rounded-pill" id="loginBtn">Login</button>
+                    </li>
+                    <!-- Sign Up Button (shown if not logged in) -->
+                    <li class="nav-item" id="signupButtonContainer">
+                        <button class="btn btn-outline-success rounded-pill" id="signupBtn">Sign Up</button>
+                    </li>
+                    <!-- Logout Button (shown if logged in) -->
+                    <li class="nav-item d-none" id="logoutButtonContainer">
+                        <button class="btn btn-danger rounded-pill" id="logoutBtn">Logout</button>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </header>
+
+    <!-- Modals for Login, Signup, List Item, and Message Box -->
+
+    <!-- Login Modal: Pops up for user login -->
+    <div id="loginModal" class="custom-modal d-none">
+        <div class="modal-content-custom">
+            <span class="close-button" id="closeLoginModal">&times;</span>
+            <h4 class="text-center text-success mb-4">Login to LocalLink Market</h4>
+            <form id="loginForm">
+                <div class="mb-3">
+                    <label for="loginEmail" class="form-label">Email address</label>
+                    <input type="email" class="form-control rounded-pill" id="loginEmail" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="loginPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control rounded-pill" id="loginPassword" name="password" required>
+                </div>
+                <button type="submit" class="btn btn-success rounded-pill w-100">Login</button>
+            </form>
+            
+            <p class="text-center mt-3">Don't have an account? <a href="#" id="switchToSignup">Sign Up</a></p>
+            <p id="loginError" class="text-danger mt-2 text-center"></p>
+        </div>
+    </div>
+
+    <!-- Signup Modal: Pops up for new user registration -->
+    <div id="signupModal" class="custom-modal d-none">
+        <div class="modal-content-custom">
+            <span class="close-button" id="closeSignupModal">&times;</span>
+            <h4 class="text-center text-success mb-4">Create Your LocalLink Account</h4>
+            <form id="signupForm" action="signup.php" method="POST">
+                <div class="mb-3">
+                    <label for="signupUsername" class="form-label">Username</label>
+                    <input type="text" class="form-control rounded-pill" id="signupUsername" name="username" required>
+                </div>
+                    <button type="submit" name="signup_submit">Sign Up</button>
+                <div class="mb-3">
+                    <label for="signupEmail" class="form-label">Email address</label>
+                    <input type="email" class="form-control rounded-pill" id="signupEmail" name="email" required>
+                </div>
+                <div class="mb-3">
+                    <label for="signupPassword" class="form-label">Password</label>
+                    <input type="password" class="form-control rounded-pill" id="signupPassword" name="password" required minlength="6">
+                </div>
+                <button type="submit" class="btn btn-success rounded-pill w-100">Sign Up</button>
+            </form>
+            
+            <p class="text-center mt-3">Already have an account? <a href="#" id="switchToLogin">Login</a></p>
+            <p id="signupError" class="text-danger mt-2 text-center"></p>
+        </div>
+    </div>
+
+    <!-- List Item Modal: Pops up for users to submit new item listings -->
+    <div id="listItemModal" class="custom-modal d-none">
+        <div class="modal-content-custom">
+            <span class="close-button" id="closeListItemModal">&times;</span>
+            <h4 class="text-center text-success mb-4">List Your Item</h4>
+            <form id="itemListingForm" action="php/list_item.php" method="POST">
+                <div class="mb-3">
+                    <label for="itemTitle" class="form-label">Item Title</label>
+                    <input type="text" class="form-control rounded-pill" id="itemTitle" name="title" required>
+                </div>
+                <div class="mb-3">
+                    <label for="itemDescription" class="form-label">Description</label>
+                    <textarea class="form-control rounded-lg" id="itemDescription" name="description" rows="3" required></textarea>
+                </div>
+                <div class="mb-3">
+                    <label for="itemCategory" class="form-label">Category</label>
+                    <select class="form-select rounded-pill" id="itemCategory" name="category" required>
+                        <option value="">Select a category</option>
+                        <option value="Furniture">Furniture</option>
+                        <option value="Electronics">Electronics</option>
+                        <option value="Books">Books</option>
+                        <option value="Fashion">Fashion</option>
+                        <option value="Sporting Goods">Sporting Goods</option>
+                        <option value="Home Goods">Home Goods</option>
+                        <option value="Services">Services</option>
+                        <option value="Other">Other</option>
+                    </select>
+                </div>
+                <div class="mb-3">
+                    <label for="itemPrice" class="form-label">Price (R) or Type</label>
+                    <input type="text" class="form-control rounded-pill" id="itemPrice" name="price" placeholder="e.g., 500 or SWAP or FREE" required>
+                </div>
+                <p class="text-muted small">Image upload not supported in this version. A generic image will be used.</p>
+                <button type="submit" class="btn btn-success rounded-pill w-100">Post Item</button>
+            </form>
+            
+            <p id="itemListingError" class="text-danger mt-2 text-center"></p>
+        </div>
+    </div>
+
+    <!-- Message Box: For displaying various messages to the user (e.g., success, error) -->
+    <div id="messageBox" class="custom-modal d-none">
+        <div class="modal-content-custom">
+            <span class="close-button" id="closeMessageBox">&times;</span>
+            <p id="messageBoxText" class="text-center fs-5"></p>
+            <button class="btn btn-success rounded-pill w-50 mx-auto d-block" id="messageBoxOkBtn">OK</button>
+        </div>
+    </div>
+
+    <!-- Main Content Area of the Website -->
+    <main class="container mt-5">
+        <!-- Advertisement Slideshow: A simple image slideshow for promotions -->
+        <div id="advertisementSlideshow" class="carousel slide mb-5 rounded-lg shadow-sm" data-bs-ride="carousel">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#advertisementSlideshow" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#advertisementSlideshow" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#advertisementSlideshow" data-bs-slide-to="2" aria-label="Slide 3"></button>
+            </div>
+            <div class="carousel-inner rounded-lg">
+                <div class="carousel-item active">
+                    <img src="images/banner5.png" class="d-block w-100 rounded-lg" alt="Advertisement 1">
+                    <div class="carousel-caption d-none d-md-block text-shadow">
+                        <h5>Connect with Neighbors!</h5>
+                        <p>Buy, sell, and swap directly within your community.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/banner2.jpg" class="d-block w-100 rounded-lg" alt="Advertisement 2">
+                    <div class="carousel-caption d-none d-md-block text-shadow">
+                        <h5>Discover Amazing Deals!</h5>
+                        <p>Browse thousands of local listings and find exactly what you need.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="images/banner6.png" class="d-block w-100 rounded-lg" alt="Advertisement 3">
+                    <div class="carousel-caption d-none d-md-block text-shadow">
+                        <h5>Connect with Neighbors!</h5>
+                        <p>Buy, sell, and swap directly within your community.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#advertisementSlideshow" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#advertisementSlideshow" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+
+        <!-- Categories Section: Allows users to browse items by type -->
+        <section id="categories-section" class="text-center my-5">
+            <h2 class="section-heading mb-4">Browse Categories</h2>
+            <div class="d-flex justify-content-center flex-wrap gap-4">
+              <!-- Category 1: Clothing -->
+                <a href="#" class="category-card-link text-decoration-none">
+                    <div class="category-card rounded-circle d-flex flex-column justify-content-center align-items-center mx-auto">
+                     <img src="images/categoryimg/cat2.png" alt="Clothing" class="category-icon">
+                     </div>
+                    <small class="text-muted text-center d-block mt-2">Clothing</small>
+                </a>
+  
+            <!-- Category 2: Books -->
+                <a href="#" class="category-card-link text-decoration-none">
+                     <div class="category-card rounded-circle d-flex flex-column justify-content-center align-items-center mx-auto">
+                        <img src="images/categoryimg/cat7.png" alt="Books" class="category-icon">
+                    </div>
+                         <small class="text-muted text-center d-block mt-2">Books</small>
+                </a>
+  
+            <!-- Category 3: Sporting Goods -->
+            <a href="#" class="category-card-link text-decoration-none">
+                <div class="category-card rounded-circle d-flex flex-column justify-content-center align-items-center mx-auto">
+                    <img src="images/categoryimg/cat4.png" alt="Sporting Goods" class="category-icon">
+                </div>
+                <small class="text-muted text-center d-block mt-2">Sporting Goods</small>
+            </a>
+            
+            <!-- Category 5: Home Decor -->
+            <a href="#" class="category-card-link text-decoration-none">
+                <div class="category-card rounded-circle d-flex flex-column justify-content-center align-items-center mx-auto">
+                    <img src="images/5.png" alt="Home Decor" class="category-icon">
+                </div>
+                <small class="text-muted text-center d-block mt-2">Home Decor</small>
+            </a>
+            
+            <!-- Category 6: Outdoor -->
+            <a href="#" class="category-card-link text-decoration-none">
+                <div class="category-card rounded-circle d-flex flex-column justify-content-center align-items-center mx-auto">
+                    <img src="images/categoryimg/cat3.png" alt="Outdoor" class="category-icon">
+                </div>
+                <small class="text-muted text-center d-block mt-2">Outdoor</small>
+            </a>
+            <!-- Category 7: Tools -->
+            <a href="#" class="category-card-link text-decoration-none">
+                <div class="category-card rounded-circle d-flex flex-column justify-content-center align-items-center mx-auto">
+                    <img src="images/categoryimg/cat1.png" alt="Tools" class="category-icon">
+                </div>
+                <small class="text-muted text-center d-block mt-2">Tools</small>
+            </a>
+        </section>
+
+        <!-- Main Heading for Item Listings and "List an Item" Button -->
+        <section class="card">
+            <section class="card">
+                <div class="common-heading">
+                  <div class="common-heading-left">
+                    <h1>Featured Listings</h1>
+                  </div>
+                  <div class="common-heading-right">
+                    <button>View All</button>
+                  </div>
+                </div>
+              
+                <div class="common-row">
+                  <div class="common-col">
+                    <img src="images/handmade-soap.jpg" alt="Handmade Soap" class="product-img">
+                    <h3 class="product-title">Handmade Soap</h3>
+                    <h4>R30 each</h4>
+                    <h6 class="price">Locally crafted, organic scents</h6>
+                    <i class="fa-solid fa-cart-shopping" id="add-cart"></i>
+                  </div>
+              
+                  <div class="common-col">
+                    <img src="images/wood-bench.jpg" alt="Wooden Bench" class="product-img">
+                    <h3 class="product-title">Reclaimed Wood Bench</h3>
+                    <h4>R850</h4>
+                    <h6 class="price">Built from upcycled timber</h6>
+                    <i class="fa-solid fa-cart-shopping" id="add-cart"></i>
+                  </div>
+              
+                  <div class="common-col">
+                    <img src="images/beaded-necklace.jpg" alt="Beaded Necklace" class="product-img">
+                    <h3 class="product-title">Beaded Necklace</h3>
+                    <h4>R120</h4>
+                    <h6 class="price">Handmade Zulu jewelry</h6>
+                    <i class="fa-solid fa-cart-shopping" id="add-cart"></i>
+                  </div>
+              
+                  <div class="common-col">
+                    <img src="images/vintage-bag.jpg" alt="Vintage Bag" class="product-img">
+                    <h3 class="product-title">Vintage Leather Bag</h3>
+                    <h4>R300</h4>
+                    <h6 class="price">Pre-loved & restored</h6>
+                    <i class="fa-solid fa-cart-shopping" id="add-cart"></i>
+                  </div>
+                </div>
+              </section>
+              
+
+            
+          </section>
+          
+    </main>
+
+    <!-- Bootstrap JS Bundle: Includes Popper.js for modals and slideshows -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+
+    <!-- Your custom JavaScript file for app logic and Firebase integration -->
+    <script type="module" src="js/script.js"></script>
+    <script src="js/modal-handlers.js"></script>
+
+</body>
+</html>

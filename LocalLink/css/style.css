@@ -1,0 +1,360 @@
+/* Import Google Fonts: Inter for general body text, Fredoka One for brand name */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fredoka+One&display=swap');
+
+/* Apply Inter font to the entire body for consistent readability */
+body {
+    font-family: 'Inter', sans-serif;
+    background-color: #f8f9fa; /* Light background for the page */
+}
+
+/* Specific styling for the website's brand name in the header */
+.navbar-brand {
+    font-family: 'Fredoka One', cursive; /* Use Fredoka One for a distinctive look */
+    font-size: 2.2rem !important; /* Make the brand name larger */
+    letter-spacing: 1px; /* Add some spacing between letters */
+    transition: color 0.3s ease; /* Smooth color transition on hover */
+}
+
+/* Brand name hover effect: changes to a lighter green */
+.navbar-brand:hover {
+    color: #a8dadc !important; /* Lighter color for contrast with dark green header */
+}
+
+/* Styling for the search input field's placeholder text */
+.form-control::placeholder {
+    color: #6c757d; /* A slightly darker gray for visibility */
+    opacity: 0.8; /* Make it a bit transparent */
+}
+
+/* Hover effect for solid green buttons (e.g., Login, Post Item) */
+.btn-success:hover {
+    background-color: #198754; /* Darker green on hover */
+    border-color: #198754; /* Match border color */
+    transform: translateY(-1px); /* Slight lift effect for interactivity */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: all 0.2s ease-in-out; /* Smooth transition for all changes */
+}
+
+/* Hover effect for outlined green buttons (e.g., Sign Up, Message Seller) */
+.btn-outline-success:hover {
+    background-color: #28a745; /* Fills with green color on hover */
+    color: #ffffff; /* Text turns white on hover */
+    transform: translateY(-1px); /* Slight lift effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: all 0.2s ease-in-out; /* Smooth transition */
+}
+
+/* Hover effect for the outlined light button (e.g., Search button in dark header) */
+.btn-outline-light:hover {
+    background-color: rgba(255, 255, 255, 0.2); /* Slightly transparent white background on hover */
+    color: #ffffff; /* Ensure text/icon remains white */
+    border-color: rgba(255, 255, 255, 0.5); /* Slightly visible border on hover */
+    transform: translateY(-1px); /* Slight lift effect */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Subtle shadow */
+    transition: all 0.2s ease-in-out; /* Smooth transition */
+}
+
+
+/* Custom styles for the "List an Item" button */
+#listItemBtn {
+    transition: all 0.2s ease-in-out; /* Smooth transitions for its effects */
+}
+
+/* Hover effect for the "List an Item" button */
+#listItemBtn:hover {
+    transform: translateY(-2px); /* Lifts higher on hover */
+    box-shadow: 0 6px 12px rgba(40, 167, 69, 0.3); /* More prominent green shadow */
+}
+
+/* Styles for individual item cards displayed on the main page */
+.card {
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smooth effects */
+}
+
+/* Hover effect for item cards */
+.card:hover {
+    transform: translateY(-5px); /* Lifts the card slightly */
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.15) !important; /* Larger shadow to highlight */
+}
+
+/* Ensures consistency for item card images */
+.card-img-top {
+    height: 200px; /* Fixed height for uniform image size */
+    object-fit: cover; /* Images cover the area without distortion */
+}
+
+/* Styling for category and item badges */
+.badge {
+    padding: 0.5em 0.8em; /* Padding around text */
+    border-radius: 1rem; /* More rounded corners for a modern look */
+    font-weight: 500; /* Medium font weight */
+}
+
+/* Custom Modal Styles (used for login, signup, list item, and message pop-ups) */
+.custom-modal {
+    position: fixed; /* Fixed position relative to the viewport */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black overlay */
+    display: flex; /* Use flexbox for centering content */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    z-index: 1050; /* Ensures it appears above Bootstrap navbars */
+}
+
+/* Content area of the custom modals */
+.modal-content-custom {
+    background-color: #fff; /* White background */
+    padding: 30px; /* Internal padding */
+    border-radius: 10px; /* Rounded corners */
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3); /* Subtle shadow */
+    position: relative; /* For absolute positioning of the close button */
+    width: 90%; /* Occupy 90% of screen width on small devices */
+    max-width: 450px; /* Maximum width on larger screens */
+    animation: fadeIn 0.3s ease-out; /* Smooth fade-in animation */
+}
+
+/* Close button for modals */
+.close-button {
+    position: absolute; /* Position relative to .modal-content-custom */
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    font-weight: bold;
+    cursor: pointer; /* Indicates it's clickable */
+    color: #aaa; /* Light grey color */
+}
+
+/* Close button hover effect */
+.close-button:hover,
+.close-button:focus {
+    color: #333; /* Darker on hover */
+    text-decoration: none; /* No underline */
+}
+
+/* Text shadow for image slideshow captions for better readability */
+.carousel-caption {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.6); /* Creates a shadow behind text */
+}
+
+/* Categories Section Specific Styles */
+/* Hides the scrollbar for the horizontal category list (for a cleaner look) */
+.hide-scrollbar {
+    -ms-overflow-style: none;  /* For Internet Explorer and Edge */
+    scrollbar-width: none;  /* For Firefox */
+}
+.hide-scrollbar::-webkit-scrollbar {
+    display: none; /* For Chrome, Safari, and Opera */
+}
+
+/* Styling for each clickable category card link */
+.category-card-link {
+    display: block; /* Ensures the entire area is clickable */
+    text-align: center; /* Centers text within the card */
+    flex-shrink: 0; /* Prevents cards from shrinking when space is limited */
+    width: 120px; /* Fixed width for consistent sizing */
+    margin: 0 10px; /* Horizontal spacing between category cards */
+}
+
+/* The circular container for each category icon and text */
+.category-card {
+    width: 100px; /* Diameter of the circle */
+    height: 100px; /* Diameter of the circle */
+    border: 2px solid rgba(40, 167, 69, 0.1); /* Light green border */
+    transition: all 0.2s ease-in-out; /* Smooth transition for hover effects */
+    cursor: pointer; /* Indicates it's clickable */
+}
+
+/* Hover effect for category cards */
+.category-card:hover {
+    transform: translateY(-5px); /* Lifts the card slightly */
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1); /* Adds a shadow */
+    border-color: #28a745; /* Darker green border on hover */
+}
+
+/* Styling for the Font Awesome icons within category cards */
+.category-card i {
+    font-size: 2.5rem !important; /* Adjust icon size */
+    margin-bottom: 5px; /* Space between icon and text */
+}
+
+/* Styling for the category names (small text) */
+.category-card small {
+    font-weight: 500; /* Medium font weight */
+    color: #343a40 !important; /* Darker text for better contrast and readability */
+}
+
+/* Custom color for the "Other" category icon to distinguish it */
+.text-light-grey {
+    color: #6c757d; /* Uses Bootstrap's text-muted color for a greyish tone */
+}
+.category-card img.category-icon {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    border-radius: 50%; /* Makes the image circular */
+    border: 2px solid #dee2e6; /* Optional: light border around image */
+    margin-bottom: 5px;
+}
+
+/* Card Section Container */
+.card {
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.15);
+  padding: 20px 10px;
+  margin: 30px 20px;
+  border-radius: 8px;
+  background-color: #fff;
+}
+
+/* Common Heading Styles */
+.card {
+    background: #fff;
+    padding: 2rem;
+    margin: 2rem 0;
+    border-radius: 16px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+  }
+  
+  .common-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+  }
+  
+  .common-heading h1 {
+    font-size: 1.8rem;
+    font-weight: 600;
+  }
+  
+  .common-heading-right button {
+    padding: 0.5rem 1rem;
+    border: none;
+    background-color: #0c8b6e;
+    color: #fff;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+  }
+  
+  .common-heading-right button:hover {
+    background-color: #066a54;
+  }
+  
+  .common-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    justify-content: space-between;
+  }
+  
+  .common-col {
+    flex: 1 1 calc(25% - 1rem);
+    background-color: #f8f8f8;
+    border-radius: 12px;
+    padding: 1rem;
+    text-align: center;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .common-col:hover {
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+  }
+  
+  .product-img {
+    width: 100%;
+    max-height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .product-title {
+    font-size: 1.2rem;
+    font-weight: 500;
+    margin: 0.5rem 0;
+  }
+  
+  .price {
+    font-size: 0.9rem;
+    color: #666;
+  }
+  
+  .fa-cart-shopping {
+    font-size: 1.3rem;
+    margin-top: 0.5rem;
+    cursor: pointer;
+    color: #0c8b6e;
+    transition: transform 0.2s ease;
+  }
+  
+  .fa-cart-shopping:hover {
+    transform: scale(1.1);
+  }
+  
+/* Responsive adjustments for various screen sizes (using Bootstrap breakpoints) */
+@media (max-width: 991.98px) { /* Styles apply to devices smaller than large (lg) breakpoint */
+    /* Header adjustments for smaller screens */
+    .navbar-collapse {
+        flex-direction: column; /* Stack search and buttons vertically */
+        align-items: flex-start; /* Align items to the left */
+    }
+    .d-flex.flex-grow-1 {
+        width: 100%; /* Make search form take full width */
+        margin-right: 0 !important; /* Remove horizontal margins */
+        margin-left: 0 !important;
+        margin-bottom: 1rem !important; /* Add space below search form */
+    }
+    .navbar-nav {
+        width: 100%;
+        flex-direction: column; /* Stack login/signup buttons vertically */
+        align-items: flex-start;
+    }
+    .navbar-nav .nav-item {
+        width: 100%;
+        margin-bottom: 0.5rem; /* Space between stacked buttons */
+        margin-right: 0 !important; /* Remove horizontal margins */
+    }
+    .navbar-nav .nav-item button {
+        width: 100%; /* Make buttons take full width */
+    }
+    /* Main content area adjustments for smaller screens */
+    .main .d-flex {
+        flex-direction: column; /* Stack heading and "List an Item" button vertically */
+        align-items: flex-start;
+    }
+    #listItemBtn {
+        width: 100%; /* Make "List an Item" button full width */
+        margin-top: 1rem; /* Add space above the button */
+    }
+    /* Adjust advertisement banner image height on smaller screens */
+    .carousel-item img {
+        height: 200px; /* Shorter ads for mobile view */
+        object-fit: cover; /* Ensure image covers the area */
+    }
+
+    /* Category card adjustments for smaller screens */
+    .category-card-link {
+        width: 100px; /* Slightly smaller fixed width for category cards */
+        margin: 0 8px; /* Reduce horizontal margin */
+    }
+    .category-card {
+        width: 90px; /* Adjust circle size */
+        height: 90px; /* Adjust circle size */
+    }
+    .category-card i {
+        font-size: 2rem !important; /* Smaller icon size */
+    }
+    .category-card small {
+        font-size: 0.75rem; /* Smaller text size for category names */
+    }
+}
+
+/* Basic fade-in animation for modals when they appear */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-20px); } /* Starts transparent and slightly higher */
+    to { opacity: 1; transform: translateY(0); } /* Ends fully opaque and in original position */
+}
